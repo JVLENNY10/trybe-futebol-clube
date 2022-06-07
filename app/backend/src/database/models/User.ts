@@ -1,14 +1,14 @@
 import { Model, DataTypes } from 'sequelize';
 import db from '.';
 
-class users extends Model {
+class User extends Model {
   username: string;
   role: string;
   email: string;
   password: string;
 }
 
-users.init({
+User.init({
   username: DataTypes.STRING,
   role: DataTypes.STRING,
   email: DataTypes.STRING,
@@ -20,4 +20,4 @@ users.init({
   timestamps: false,
 });
 
-export default users;
+export default User;
