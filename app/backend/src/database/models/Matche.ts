@@ -1,25 +1,31 @@
 import { Model, DataTypes } from 'sequelize';
 import db from '.';
 
-class matche extends Model {
-  homeTeam: number;
-  homeTeamGoals: number;
-  awayTeam: number;
-  awayTeamGoals: number;
-  inProgress: boolean;
+class Matche extends Model {
+  public id?: number;
+  public homeTeam: number;
+  public homeTeamGoals: number;
+  public awayTeam: number;
+  public awayTeamGoals: number;
+  public inProgress: boolean;
 }
 
-matche.init({
+Matche.init({
+  id: {
+    allowNull: false,
+    primaryKey: true,
+    type: DataTypes.INTEGER,
+  },
   homeTeam: DataTypes.INTEGER,
   homeTeamGoals: DataTypes.INTEGER,
   awayTeam: DataTypes.INTEGER,
   awayTeamGoals: DataTypes.INTEGER,
   inProgress: DataTypes.TINYINT,
 }, {
-  sequelize: db,
-  underscored: true,
   modelName: 'matche',
+  sequelize: db,
   timestamps: false,
+  underscored: true,
 });
 
-export default matche;
+export default Matche;
