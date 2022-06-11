@@ -31,4 +31,21 @@ const invalidPassword = {
   password: '$2a$08$xi.Hxk1czAO0nZR..B393u10aED0RQ1N3PAEXQ7HxtLjKPEZBu.PW'
 }
 
-export { loginRequest, loginResponse, userExpected, invalidEmail, invalidPassword };
+
+const nullEmail = {
+  password: '$2a$08$xi.Hxk1czAO0nZR..B393u10aED0RQ1N3PAEXQ7HxtLjKPEZBu.PW'
+}
+
+const nullPassword = {
+  email: 'admin@admin.com',
+}
+
+export {
+  loginRequest,
+  loginResponse,
+  userExpected,
+  invalidEmail,
+  invalidPassword,
+  nullEmail,
+  nullPassword
+};
