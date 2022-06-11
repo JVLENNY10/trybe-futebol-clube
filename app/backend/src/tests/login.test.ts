@@ -7,7 +7,14 @@ import { app } from '../app';
 import { Response } from 'superagent';
 
 import User from '../database/models/User';
-import { loginRequest, loginResponse, userExpected, invalidEmail } from './mock/models/usersMocks';
+
+import {
+  loginRequest,
+  loginResponse,
+  userExpected,
+  invalidEmail,
+  invalidPassword
+} from './mock/models/usersMocks';
 
 chai.use(chaiHttp);
 
@@ -45,6 +52,13 @@ describe('Fracasso em requisição do tipo POST para /login', () => {
 
   it('E-Mail inválido: Retorna um status 401(Unauthorized) e uma mensagem de erro', async () => {
     response = await chai.request(app).post('login').send(invalidEmail);
+
+    expect(response).to.have.status(401);
+    expect(response.body.message).to.deep.equal('Incorrect email or password');
+  });
+
+  it('Senha inválida: Retorna um status 401(Unauthorized) e uma mensagem de erro', async () => {
+    response = await chai.request(app).post('login').send(invalidPassword);
 
     expect(response).to.have.status(401);
     expect(response.body.message).to.deep.equal('Incorrect email or password');
