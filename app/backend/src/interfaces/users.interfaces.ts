@@ -3,10 +3,13 @@ interface IUsersFunctions {
 }
 
 interface IUser {
-  id: number,
-  username: string,
-  role: string,
-  email: string
+  user: {
+    id: number,
+    username: string,
+    role: string,
+    email: string
+  },
+  token: string,
 }
 
 export { IUsersFunctions, IUser };
