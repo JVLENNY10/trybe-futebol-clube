@@ -13,7 +13,9 @@ import {
   loginResponse,
   userExpected,
   invalidEmail,
-  invalidPassword
+  invalidPassword,
+  nullEmail,
+  nullPassword
 } from './mock/models/usersMocks';
 
 chai.use(chaiHttp);
@@ -43,7 +45,7 @@ describe('Fracasso em requisição do tipo POST para /login', () => {
   let response: Response;
 
   before(() => {
-    sinon.stub(User, 'findOne').resolves(userExpected as User);
+    sinon.stub(User, 'findOne').resolves(null);
   });
 
   after(() => {
@@ -63,12 +65,18 @@ describe('Fracasso em requisição do tipo POST para /login', () => {
     expect(response).to.have.status(401);
     expect(response.body.message).to.deep.equal('Incorrect email or password');
   });
+
+  it('E-Mail nulo: Retorna um status 400(Bad Request) e uma mensagem de erro', async () => {
+    response = await chai.request(app).post('login').send(nullEmail);
+
+    expect(response).to.have.status(400);
+    expect(response.body.message).to.deep.equal('All fields must be filled');
+  });
+
+  it('Senha nula: Retorna um status 400(Bad Request) e uma mensagem de erro', async () => {
+    response = await chai.request(app).post('login').send(nullPassword);
+
+    expect(response).to.have.status(400);
+    expect(response.body.message).to.deep.equal('All fields must be filled');
+  });
 });
-
-function before(arg0: () => void) {
-  throw new Error('Function not implemented.');
-}
-
-function after(arg0: () => void) {
-  throw new Error('Function not implemented.');
-}
