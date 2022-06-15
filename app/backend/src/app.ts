@@ -18,6 +18,7 @@ class App {
     };
 
     this.app.use(accessControl);
+    this.app.use(express.json());
     this.app.use(loginRoutes);
   }
 
