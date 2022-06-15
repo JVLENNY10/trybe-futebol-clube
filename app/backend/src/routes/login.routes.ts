@@ -9,6 +9,6 @@ const usersMiddlewares = new UsersMiddlewares();
 const { login } = usersControllers;
 const { checkEmail, checkPassword } = usersMiddlewares;
 
-routes.get('/login', checkEmail, checkPassword, login);
+routes.post('/login', checkEmail, checkPassword, login);
 
 export default routes;
