@@ -6,19 +6,24 @@ import { IUsersFunctions, IUser } from '../interfaces/users.interfaces';
 class UsersServices implements IUsersFunctions {
   public login = async (email: string, password: string): Promise<IUser | null> => {
     const user = await User.findOne({ where: { email } });
-    const passwordExists = Bcrypt.compareSync(password, user?.password as string);
 
-    if (!user || !passwordExists) return null;
+    if (user !== null) {
+      const passwordExists = Bcrypt.compareSync(password, user.password);
 
-    const { id, username, role } = user;
-    const token = jwtGenerator({ id, email });
+      if (passwordExists) {
+        const { id, username, role } = user;
+        const token = jwtGenerator({ id, email });
 
-    const result = {
-      user: { id, username, role, email },
-      token,
-    };
+        const result = {
+          user: { id, username, role, email },
+          token,
+        };
 
-    return result as IUser;
+        return result as IUser;
+      }
+    }
+
+    return null;
   };
 }
 
