@@ -1,15 +1,18 @@
 import { Request, Response, NextFunction } from 'express';
+import UsersService from '../services/users.services';
 
 class UsersMiddlewares {
-  public checkEmail = (
+  private service: UsersService;
+
+  constructor() {
+    this.service = new UsersService();
+  }
+
+  public checkBody = (
     async (req: Request, res: Response, next: NextFunction): Promise<Response | undefined> => {
-      const { email } = req.body;
+      const { email, password } = req.body;
 
-      if (!email.includes('@') || !email.includes('.com')) {
-        return res.status(401).json({ message: 'Incorrect email or password' });
-      }
-
-      if (email === undefined) {
+      if (email.length === 0 || password.length === 0) {
         return res.status(400).json({ message: 'All fields must be filled' });
       }
 
@@ -17,16 +20,13 @@ class UsersMiddlewares {
     }
   );
 
-  public checkPassword = (
+  public checkLogin = (
     async (req: Request, res: Response, next: NextFunction): Promise<Response | undefined> => {
-      const { password } = req.body;
+      const { email, password } = req.body;
+      const login = await this.service.login(email, password);
 
-      if (password.length <= 6) {
+      if (!login) {
         return res.status(401).json({ message: 'Incorrect email or password' });
-      }
-
-      if (password === undefined) {
-        return res.status(400).json({ message: 'All fields must be filled' });
       }
 
       next();
