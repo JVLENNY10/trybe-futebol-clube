@@ -8,9 +8,9 @@ class UsersControllers {
     this.service = new UsersService();
   }
 
-  public loginUser = async (req: Request, res: Response): Promise<Response> => {
-    const { email } = req.body;
-    const user = await this.service.loginUser(email);
+  public login = async (req: Request, res: Response): Promise<Response> => {
+    const { email, password } = req.body;
+    const user = await this.service.login(email, password);
     return res.status(200).json(user);
   };
 }
