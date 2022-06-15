@@ -1,5 +1,5 @@
 interface IUsersFunctions {
-  loginUser: (email: string) => Promise<null | object>;
+  login: (email: string, password: string) => Promise<null | object>;
 }
 
 interface IUser {
