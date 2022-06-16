@@ -1,7 +1,7 @@
 import Bcrypt = require('bcryptjs');
-import JwtServices from './jwt.services';
+import JwtServices from './JwtServices';
 import User from '../database/models/User';
-import { IUsersFunctions, IUser } from '../interfaces/users.interfaces';
+import { IUsersFunctions, IUser } from '../interfaces/UsersInterfaces';
 
 class UsersServices implements IUsersFunctions {
   private jwtServices: JwtServices;

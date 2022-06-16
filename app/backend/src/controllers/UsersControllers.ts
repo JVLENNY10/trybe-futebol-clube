@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
 import JwtServices from '../services/jwt.services';
 import UsersServices from '../services/users.services';
-import { IUserToken } from '../interfaces/users.interfaces';
+import { IUserToken } from '../interfaces/UsersInterfaces';
 
 class UsersControllers {
   private usersServices: UsersServices;

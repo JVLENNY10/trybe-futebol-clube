@@ -1,11 +1,11 @@
 import { Request, Response, NextFunction } from 'express';
-import UsersService from '../services/users.services';
+import UsersServices from '../services/users.services';
 
 class UsersMiddlewares {
-  private service: UsersService;
+  private services: UsersServices;
 
   constructor() {
-    this.service = new UsersService();
+    this.services = new UsersServices();
   }
 
   public checkBody = (
@@ -23,7 +23,7 @@ class UsersMiddlewares {
   public checkLogin = (
     async (req: Request, res: Response, next: NextFunction): Promise<Response | undefined> => {
       const { email, password } = req.body;
-      const login = await this.service.login(email, password);
+      const login = await this.services.login(email, password);
 
       if (!login) {
         return res.status(401).json({ message: 'Incorrect email or password' });
