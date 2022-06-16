@@ -1,5 +1,6 @@
 interface IUsersFunctions {
   login: (email: string, password: string) => Promise<object | null>;
+  loginValidate: (id: number) => Promise<string | null>;
 }
 
 interface IUser {
@@ -12,4 +13,12 @@ interface IUser {
   token: string,
 }
 
-export { IUsersFunctions, IUser };
+interface IUserToken {
+  data: {
+    id: number,
+    email: string,
+    role: string
+  }
+}
+
+export { IUsersFunctions, IUser, IUserToken };
