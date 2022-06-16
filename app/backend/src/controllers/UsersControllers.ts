@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
-import JwtServices from '../services/jwt.services';
-import UsersServices from '../services/users.services';
+import JwtServices from '../services/JwtServices';
+import UsersServices from '../services/UsersServices';
 import { IUserToken } from '../interfaces/UsersInterfaces';
 
 class UsersControllers {

@@ -1,5 +1,5 @@
 import { Request, Response, NextFunction } from 'express';
-import UsersServices from '../services/users.services';
+import UsersServices from '../services/UsersServices';
 
 class UsersMiddlewares {
   private services: UsersServices;
