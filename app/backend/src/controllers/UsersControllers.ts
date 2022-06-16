@@ -21,7 +21,6 @@ class UsersControllers {
   public loginValidate = async (req: Request, res: Response): Promise<Response> => {
     const token = req.headers.authorization;
     const { data: { role } } = this.jwtServices.decoder(token as string) as IUserToken;
-
     return res.status(200).json(role);
   };
 }

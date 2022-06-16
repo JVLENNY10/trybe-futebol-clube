@@ -31,11 +31,6 @@ class UsersServices implements IUsersFunctions {
 
     return null;
   };
-
-  public loginValidate = async (id: number): Promise<string> => {
-    const user = await User.findOne({ where: { id } });
-    return user?.role as string;
-  };
 }
 
 export default UsersServices;
