@@ -9,7 +9,7 @@ import { Response } from 'superagent';
 import User from '../database/models/User';
 
 import {
-  loginRequest,
+  loginBody,
   loginResponse,
   userExpected,
   invalidEmail,
@@ -34,7 +34,7 @@ describe('Sucesso em requisição do tipo POST para /login', () => {
   });
 
   it('Retorna um status 200(OK) e a resposta esperada', async () => {
-    response = await chai.request(app).post('login').send(loginRequest);
+    response = await chai.request(app).post('login').send(loginBody);
 
     expect(response).to.have.status(200);
     expect(response.body).to.deep.equal(loginResponse);
@@ -80,3 +80,11 @@ describe('Fracasso em requisição do tipo POST para /login', () => {
     expect(response.body.message).to.deep.equal('All fields must be filled');
   });
 });
+
+function before(arg0: () => void) {
+  throw new Error('Function not implemented.');
+}
+
+function after(arg0: () => void) {
+  throw new Error('Function not implemented.');
+}

@@ -1,6 +1,6 @@
-const loginRequest = {
+const loginBody = {
   email: 'admin@admin.com',
-  password: '$2a$08$xi.Hxk1czAO0nZR..B393u10aED0RQ1N3PAEXQ7HxtLjKPEZBu.PW'
+  password: 'secret_admin'
 }
 
 const loginResponse = {
@@ -18,22 +18,22 @@ const userExpected = {
   username: 'Admin',
   role: 'admin',
   email: 'admin@admin.com',
-  password: '$2a$08$xi.Hxk1czAO0nZR..B393u10aED0RQ1N3PAEXQ7HxtLjKPEZBu.PW'
+  password: 'secret_admin'
 }
 
 const invalidEmail = {
   email: 'admin',
-  password: '$2a$08$xi.Hxk1czAO0nZR..B393u10aED0RQ1N3PAEXQ7HxtLjKPEZBu.PW'
+  password: 'secret_admin'
 }
 
 const invalidPassword = {
-  email: 'admin',
-  password: '$2a$08$xi.Hxk1czAO0nZR..B393u10aED0RQ1N3PAEXQ7HxtLjKPEZBu.PW'
+  email: 'admin@admin.com',
+  password: 'secret'
 }
 
 
 const nullEmail = {
-  password: '$2a$08$xi.Hxk1czAO0nZR..B393u10aED0RQ1N3PAEXQ7HxtLjKPEZBu.PW'
+  password: 'secret_admin'
 }
 
 const nullPassword = {
@@ -41,7 +41,7 @@ const nullPassword = {
 }
 
 export {
-  loginRequest,
+  loginBody,
   loginResponse,
   userExpected,
   invalidEmail,
