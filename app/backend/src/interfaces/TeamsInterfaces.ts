@@ -1,5 +1,6 @@
 interface ITeamsFunctions {
   getAll: () => Promise<ITeam[]>;
+  getById: (id: string) => Promise<ITeam>;
 }
 
 interface ITeam {
