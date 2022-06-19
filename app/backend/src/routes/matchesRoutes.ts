@@ -7,9 +7,10 @@ const jwtMiddlewares = new JwtMiddlewares();
 const matchesControllers = new MatchesControllers();
 
 const { checkToken } = jwtMiddlewares;
-const { create, getAll, getAllByProgress } = matchesControllers;
+const { getAll, getAllByProgress, matchFinished, matchStarted } = matchesControllers;
 
 routes.get('/matches', getAllByProgress, getAll);
-routes.post('/matches', checkToken, create);
+routes.post('/matches', checkToken, matchStarted);
+routes.patch('/matches/:id/finish', matchFinished);
 
 export default routes;
