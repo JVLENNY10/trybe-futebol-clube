@@ -14,12 +14,13 @@ interface IMatch {
 }
 
 interface IMatchesFunctions {
-  create: (newMatch: object) => Promise<INewMatch>;
   getAll: () => Promise<IMatch[]>;
   getAllByProgress: (inProgress: string) => Promise<IMatch[]>;
+  matchFinished: (id: string) => Promise<void>;
+  matchStarted: (newMatch: object) => Promise<IMatchStarted>;
 }
 
-interface INewMatch {
+interface IMatchStarted {
   id: number,
   homeTeam: number,
   homeTeamGoals: number,
@@ -28,4 +29,4 @@ interface INewMatch {
   inProgress: boolean,
 }
 
-export { IMatch, IMatchesFunctions, INewMatch };
+export { IMatch, IMatchesFunctions, IMatchStarted };
