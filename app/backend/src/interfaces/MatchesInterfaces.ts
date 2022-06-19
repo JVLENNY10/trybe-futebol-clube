@@ -1,5 +1,6 @@
 interface IMatchesFunctions {
   getAll: () => Promise<IMatche[]>;
+  getAllByProgress: (inProgress: string) => Promise<IMatche[]>;
 }
 
 interface IMatche {
