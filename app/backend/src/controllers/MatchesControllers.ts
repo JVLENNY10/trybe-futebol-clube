@@ -8,11 +8,6 @@ class MatchesControllers {
     this.services = new MatchesServices();
   }
 
-  public create = async (req: Request, res: Response): Promise<Response> => {
-    const match = await this.services.create(req.body);
-    return res.status(201).json(match);
-  };
-
   public getAll = async (_req: Request, res: Response): Promise<Response> => {
     const matches = await this.services.getAll();
     return res.status(200).json(matches);
@@ -30,6 +25,17 @@ class MatchesControllers {
       next();
     }
   );
+
+  public matchFinished = async (req: Request, res: Response): Promise<Response> => {
+    const { id } = req.params;
+    await this.services.matchFinished(id);
+    return res.status(200).json({ message: 'Finished' });
+  };
+
+  public matchStarted = async (req: Request, res: Response): Promise<Response> => {
+    const match = await this.services.matchStarted(req.body);
+    return res.status(201).json(match);
+  };
 }
 
 export default MatchesControllers;
