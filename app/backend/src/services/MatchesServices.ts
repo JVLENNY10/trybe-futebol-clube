@@ -13,6 +13,20 @@ class MatchesServices implements IMatchesFunctions {
 
     return matches as IMatche[];
   };
+
+  public getAllByProgress = async (inProgress: string): Promise<IMatche[]> => {
+    const inProgressParsed = JSON.parse(inProgress);
+
+    const matches = await Matche.findAll({
+      include: [
+        { as: 'teamHome', attributes: ['teamName'], model: Team },
+        { as: 'teamAway', attributes: ['teamName'], model: Team },
+      ],
+      where: { inProgress: inProgressParsed },
+    });
+
+    return matches as IMatche[];
+  };
 }
 
 export default MatchesServices;
