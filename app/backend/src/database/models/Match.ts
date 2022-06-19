@@ -1,16 +1,20 @@
 import { Model, DataTypes } from 'sequelize';
+// eslint-disable-next-line import/no-cycle
+import Team from './Team';
 import db from '.';
 
-class Matche extends Model {
+class Match extends Model {
   public id?: number;
   public homeTeam: number;
   public homeTeamGoals: number;
   public awayTeam: number;
   public awayTeamGoals: number;
   public inProgress: boolean;
+  public teamHome: { teamName: string };
+  public teamAway: { teamName: string };
 }
 
-Matche.init({
+Match.init({
   id: {
     allowNull: false,
     primaryKey: true,
@@ -22,10 +26,16 @@ Matche.init({
   awayTeamGoals: DataTypes.INTEGER,
   inProgress: DataTypes.TINYINT,
 }, {
-  modelName: 'matche',
+  modelName: 'match',
   sequelize: db,
   timestamps: false,
   underscored: true,
 });
 
-export default Matche;
+Match.belongsTo(Team, { as: 'teamHome', foreignKey: 'homeTeam' });
+Match.belongsTo(Team, { as: 'teamAway', foreignKey: 'awayTeam' });
+
+Team.hasMany(Match, { as: 'teamHome', foreignKey: 'homeTeam' });
+Team.hasMany(Match, { as: 'teamAway', foreignKey: 'awayTeam' });
+
+export default Match;
