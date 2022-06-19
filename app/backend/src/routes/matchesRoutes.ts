@@ -4,8 +4,8 @@ import MatchesControllers from '../controllers/MatchesControllers';
 const routes = Router();
 const matchesControllers = new MatchesControllers();
 
-const { getAll } = matchesControllers;
+const { getAll, getAllByProgress } = matchesControllers;
 
-routes.get('/matches', getAll);
+routes.get('/matches', getAllByProgress, getAll);
 
 export default routes;
