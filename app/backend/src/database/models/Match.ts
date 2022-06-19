@@ -24,7 +24,7 @@ Match.init({
   homeTeamGoals: DataTypes.INTEGER,
   awayTeam: DataTypes.INTEGER,
   awayTeamGoals: DataTypes.INTEGER,
-  inProgress: DataTypes.TINYINT,
+  inProgress: DataTypes.BOOLEAN,
 }, {
   modelName: 'match',
   sequelize: db,
