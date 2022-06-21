@@ -10,10 +10,11 @@ const matchesMiddlewares = new MatchesMiddlewares();
 
 const { checkToken } = jwtMiddlewares;
 const { checkEqualTeams, checkTeamsExist } = matchesMiddlewares;
-const { getAll, getAllByProgress, matchFinished, matchStarted } = matchesControllers;
+const { getAll, getAllByProgress, finish, start, update } = matchesControllers;
 
 routes.get('/matches', getAllByProgress, getAll);
-routes.post('/matches', checkToken, checkTeamsExist, checkEqualTeams, matchStarted);
-routes.patch('/matches/:id/finish', matchFinished);
+routes.post('/matches', checkToken, checkTeamsExist, checkEqualTeams, start);
+routes.patch('/matches/:id', update);
+routes.patch('/matches/:id/finish', finish);
 
 export default routes;
