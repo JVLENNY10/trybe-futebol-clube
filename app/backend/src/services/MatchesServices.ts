@@ -1,8 +1,12 @@
 import Team from '../database/models/Team';
 import Match from '../database/models/Match';
-import { IMatch, IMatchesFunctions, IMatchStarted } from '../interfaces/MatchesInterfaces';
+import { IMatch, IMatchesFunctions, IMatchStart } from '../interfaces/MatchesInterfaces';
 
 class MatchesServices implements IMatchesFunctions {
+  public finish = async (id: string): Promise<void> => {
+    await Match.update({ inProgress: false }, { where: { id } });
+  };
+
   public getAll = async (): Promise<IMatch[]> => {
     const matches = await Match.findAll({
       include: [
@@ -28,14 +32,16 @@ class MatchesServices implements IMatchesFunctions {
     return matches as IMatch[];
   };
 
-  public matchFinished = async (id: string): Promise<void> => {
-    await Match.update({ inProgress: false }, { where: { id } });
+  public start = async (newMatch: object): Promise<IMatchStart> => {
+    const match = await Match.create(newMatch);
+    return match as IMatchStart;
   };
 
-  public matchStarted = async (newMatch: object): Promise<IMatchStarted> => {
-    const match = await Match.create(newMatch);
-    return match as IMatchStarted;
-  };
+  public update = (
+    async (id: string, homeTeamGoals: number, awayTeamGoals: number): Promise<void> => {
+      await Match.update({ homeTeamGoals, awayTeamGoals }, { where: { id } });
+    }
+  );
 }
 
 export default MatchesServices;
