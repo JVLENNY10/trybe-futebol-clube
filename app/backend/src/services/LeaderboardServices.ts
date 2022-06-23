@@ -11,6 +11,13 @@ class LeaderboardServices {
     this.teamsServices = new TeamsServices();
   }
 
+  private calcGoalsBalance = async (teamId: number, matches: IMatch[]) => {
+    const goalsFavor = await this.calcGoalsFavor(teamId, matches);
+    const calcGoalsOwn = await this.calcGoalsOwn(teamId, matches);
+
+    return goalsFavor - calcGoalsOwn;
+  };
+
   private calcGoalsFavor = async (teamId: number, matches: IMatch[]) => {
     let goals = 0;
 
@@ -145,7 +152,7 @@ class LeaderboardServices {
         totalLosses: this.calcTotalLosses(id, matches),
         goalsFavor: this.calcGoalsFavor(id, matches),
         goalsOwn: this.calcGoalsOwn(id, matches),
-        goalsBalance: 0,
+        goalsBalance: this.calcGoalsBalance(id, matches),
         efficiency: 0,
       };
     });
