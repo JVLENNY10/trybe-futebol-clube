@@ -11,6 +11,19 @@ class LeaderboardServices {
     this.teamsServices = new TeamsServices();
   }
 
+  private calcTotalGames = async (teamId: number, match: IMatch) => {
+    const { homeTeam } = match;
+    let games = 0;
+
+    if (teamId === homeTeam) {
+      games += 1;
+    } else {
+      games += 1;
+    }
+
+    return games;
+  };
+
   private calcTotalPoints = async (teamId: number, match: IMatch) => {
     const { homeTeam, awayTeam, homeTeamGoals, awayTeamGoals } = match;
     let points = 0;
@@ -36,7 +49,7 @@ class LeaderboardServices {
       return {
         name: teamName,
         totalPoints: this.calcTotalPoints(id, match),
-        totalGames: 0,
+        totalGames: this.calcTotalGames(id, match),
         totalVictories: 0,
         totalDraws: 0,
         totalLosses: 0,
