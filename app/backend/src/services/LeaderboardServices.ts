@@ -29,6 +29,24 @@ class LeaderboardServices {
     return goals;
   };
 
+  private calcGoalsOwn = async (teamId: number, matches: IMatch[]) => {
+    let goals = 0;
+
+    matches.forEach((match) => {
+      const { homeTeam, awayTeam, homeTeamGoals, awayTeamGoals, inProgress } = match;
+
+      if (inProgress === false) {
+        if (teamId === homeTeam) {
+          goals += awayTeamGoals;
+        } else if (teamId === awayTeam) {
+          goals += homeTeamGoals;
+        }
+      }
+    });
+
+    return goals;
+  };
+
   private calcTotalDraws = async (teamId: number, matches: IMatch[]) => {
     let draws = 0;
 
@@ -126,7 +144,7 @@ class LeaderboardServices {
         totalDraws: this.calcTotalDraws(id, matches),
         totalLosses: this.calcTotalLosses(id, matches),
         goalsFavor: this.calcGoalsFavor(id, matches),
-        goalsOwn: 0,
+        goalsOwn: this.calcGoalsOwn(id, matches),
         goalsBalance: 0,
         efficiency: 0,
       };
