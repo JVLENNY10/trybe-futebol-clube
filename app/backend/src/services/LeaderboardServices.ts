@@ -147,22 +147,22 @@ class LeaderboardServices {
     const matches = await this.matchesServices.getAll();
     const teams = await this.teamsServices.getAll();
 
-    return teams.map((team) => {
-      const { teamName, id } = team;
-
-      return {
-        name: teamName,
-        totalPoints: this.calcTotalPoints(id, matches),
-        totalGames: this.calcTotalGames(id, matches),
-        totalVictories: this.calcTotalWins(id, matches),
-        totalDraws: this.calcTotalDraws(id, matches),
-        totalLosses: this.calcTotalLosses(id, matches),
-        goalsFavor: this.calcGoalsFavor(id, matches),
-        goalsOwn: this.calcGoalsOwn(id, matches),
-        goalsBalance: this.calcGoalsBalance(id, matches),
-        efficiency: this.calcTeamUsage(id, matches),
-      };
-    });
+    return teams.map((team) => ({
+      name: team.teamName,
+      totalPoints: this.calcTotalPoints(team.id, matches),
+      totalGames: this.calcTotalGames(team.id, matches),
+      totalVictories: this.calcTotalWins(team.id, matches),
+      totalDraws: this.calcTotalDraws(team.id, matches),
+      totalLosses: this.calcTotalLosses(team.id, matches),
+      goalsFavor: this.calcGoalsFavor(team.id, matches),
+      goalsOwn: this.calcGoalsOwn(team.id, matches),
+      goalsBalance: this.calcGoalsBalance(team.id, matches),
+      efficiency: this.calcTeamUsage(team.id, matches),
+    })).sort((team1, team2) => {
+      if (team1.totalPoints < team2.totalPoints) return -1;
+      if (team1.totalPoints > team2.totalPoints) return 1;
+      return 0;
+    }).reverse();
   };
 }
 
