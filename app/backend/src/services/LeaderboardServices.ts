@@ -54,6 +54,13 @@ class LeaderboardServices {
     return goals;
   };
 
+  public calcTeamUsage = async (teamId: number, matches: IMatch[]) => {
+    const totalPoints = await this.calcTotalPoints(teamId, matches);
+    const totalGames = await this.calcTotalGames(teamId, matches);
+    const teamUsage = ((totalPoints / (totalGames * 3)) * 100);
+    return (teamUsage).toFixed(2);
+  };
+
   private calcTotalDraws = async (teamId: number, matches: IMatch[]) => {
     let draws = 0;
 
@@ -153,7 +160,7 @@ class LeaderboardServices {
         goalsFavor: this.calcGoalsFavor(id, matches),
         goalsOwn: this.calcGoalsOwn(id, matches),
         goalsBalance: this.calcGoalsBalance(id, matches),
-        efficiency: 0,
+        efficiency: this.calcTeamUsage(id, matches),
       };
     });
   };
