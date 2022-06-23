@@ -11,46 +11,68 @@ class LeaderboardServices {
     this.teamsServices = new TeamsServices();
   }
 
-  private calcTotalGames = async (teamId: number, match: IMatch) => {
-    const { homeTeam } = match;
+  private calcTotalGames = async (teamId: number, matches: IMatch[]) => {
     let games = 0;
 
-    if (teamId === homeTeam) {
-      games += 1;
-    } else {
-      games += 1;
-    }
+    matches.forEach((match) => {
+      const { homeTeam, awayTeam, inProgress } = match;
+
+      if (inProgress === false && (teamId === homeTeam || teamId === awayTeam)) {
+        games += 1;
+      }
+    });
 
     return games;
   };
 
-  private calcTotalPoints = async (teamId: number, match: IMatch) => {
-    const { homeTeam, awayTeam, homeTeamGoals, awayTeamGoals } = match;
+  private calcTotalPoints = async (teamId: number, matches: IMatch[]) => {
     let points = 0;
 
-    if (teamId === homeTeam && homeTeamGoals > awayTeamGoals) {
-      points += 3;
-    } else if (teamId === awayTeam && homeTeamGoals < awayTeamGoals) {
-      points += 3;
-    } else {
-      points += 1;
-    }
+    matches.forEach((match) => {
+      const { homeTeam, awayTeam, homeTeamGoals, awayTeamGoals, inProgress } = match;
+      const homeTeamWin = teamId === homeTeam && homeTeamGoals > awayTeamGoals;
+      const awayTeamWin = teamId === awayTeam && homeTeamGoals < awayTeamGoals;
+
+      if (inProgress === false) {
+        if (homeTeamWin || awayTeamWin) {
+          points += 3;
+        } else {
+          points += 1;
+        }
+      }
+    });
 
     return points;
+  };
+
+  private calculateTotalWins = async (teamId: number, matches: IMatch[]) => {
+    let totalWins = 0;
+
+    matches.forEach((match) => {
+      const { homeTeam, awayTeam, homeTeamGoals, awayTeamGoals, inProgress } = match;
+      const homeTeamWin = teamId === homeTeam && homeTeamGoals > awayTeamGoals;
+      const awayTeamWin = teamId === awayTeam && homeTeamGoals < awayTeamGoals;
+
+      if (inProgress === false && (homeTeamWin || awayTeamWin)) {
+        totalWins += 1;
+      }
+    });
+
+    return totalWins;
   };
 
   public getAll = async () => {
     const matches = await this.matchesServices.getAll();
     const teams = await this.teamsServices.getAll();
 
-    const leaderboards = matches.map((match, index) => {
-      const { teamName, id } = teams[index];
+    return teams.map((team) => {
+      const { teamName, id } = team;
 
       return {
         name: teamName,
-        totalPoints: this.calcTotalPoints(id, match),
-        totalGames: this.calcTotalGames(id, match),
-        totalVictories: 0,
+        totalPoints: this.calcTotalPoints(id, matches),
+        totalGames: this.calcTotalGames(id, matches),
+        totalVictories: this.calculateTotalWins(id, matches),
         totalDraws: 0,
         totalLosses: 0,
         goalsFavor: 0,
@@ -59,8 +81,6 @@ class LeaderboardServices {
         efficiency: 0,
       };
     });
-
-    return leaderboards;
   };
 }
 
