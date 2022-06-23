@@ -41,6 +41,22 @@ class LeaderboardServices {
     return games;
   };
 
+  private calculateTotalLosses = async (teamId: number, matches: IMatch[]) => {
+    let totalLosses = 0;
+
+    matches.forEach((match) => {
+      const { homeTeam, awayTeam, homeTeamGoals, awayTeamGoals, inProgress } = match;
+      const homeTeamLose = teamId === homeTeam && homeTeamGoals < awayTeamGoals;
+      const awayTeamLose = teamId === awayTeam && homeTeamGoals > awayTeamGoals;
+
+      if (inProgress === false && (homeTeamLose || awayTeamLose)) {
+        totalLosses += 1;
+      }
+    });
+
+    return totalLosses;
+  };
+
   private calcTotalPoints = async (teamId: number, matches: IMatch[]) => {
     let points = 0;
 
@@ -90,7 +106,7 @@ class LeaderboardServices {
         totalGames: this.calcTotalGames(id, matches),
         totalVictories: this.calculateTotalWins(id, matches),
         totalDraws: this.calculateTotalDraws(id, matches),
-        totalLosses: 0,
+        totalLosses: this.calculateTotalLosses(id, matches),
         goalsFavor: 0,
         goalsOwn: 0,
         goalsBalance: 0,
