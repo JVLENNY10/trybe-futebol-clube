@@ -147,20 +147,41 @@ class LeaderboardServices {
     const matches = await this.matchesServices.getAll();
     const teams = await this.teamsServices.getAll();
 
-    return teams.map((team) => ({
-      name: team.teamName,
-      totalPoints: this.calcTotalPoints(team.id, matches),
-      totalGames: this.calcTotalGames(team.id, matches),
-      totalVictories: this.calcTotalWins(team.id, matches),
-      totalDraws: this.calcTotalDraws(team.id, matches),
-      totalLosses: this.calcTotalLosses(team.id, matches),
-      goalsFavor: this.calcGoalsFavor(team.id, matches),
-      goalsOwn: this.calcGoalsOwn(team.id, matches),
-      goalsBalance: this.calcGoalsBalance(team.id, matches),
-      efficiency: this.calcTeamUsage(team.id, matches),
-    })).sort((team1, team2) => {
+    return teams.map((team) => (
+      {
+        name: team.teamName,
+        totalPoints: this.calcTotalPoints(team.id, matches),
+        totalGames: this.calcTotalGames(team.id, matches),
+        totalVictories: this.calcTotalWins(team.id, matches),
+        totalDraws: this.calcTotalDraws(team.id, matches),
+        totalLosses: this.calcTotalLosses(team.id, matches),
+        goalsFavor: this.calcGoalsFavor(team.id, matches),
+        goalsOwn: this.calcGoalsOwn(team.id, matches),
+        goalsBalance: this.calcGoalsBalance(team.id, matches),
+        efficiency: this.calcTeamUsage(team.id, matches),
+      }
+    ));
+  };
+
+  public getAllAndReverseSort = async () => {
+    const tests = await this.getAll();
+
+    tests.sort((team1, team2) => {
       if (team1.totalPoints < team2.totalPoints) return -1;
       if (team1.totalPoints > team2.totalPoints) return 1;
+
+      if (team1.totalVictories > team2.totalVictories) return -1;
+      if (team1.totalVictories < team2.totalVictories) return 1;
+
+      if (team1.goalsBalance > team2.goalsBalance) return -1;
+      if (team1.goalsBalance < team2.goalsBalance) return 1;
+
+      if (team1.goalsFavor > team2.goalsFavor) return -1;
+      if (team1.goalsFavor < team2.goalsFavor) return 1;
+
+      if (team1.goalsOwn > team2.goalsOwn) return -1;
+      if (team1.goalsOwn < team2.goalsOwn) return 1;
+
       return 0;
     }).reverse();
   };
