@@ -11,19 +11,37 @@ class LeaderboardServices {
     this.teamsServices = new TeamsServices();
   }
 
-  private calculateTotalDraws = async (teamId: number, matches: IMatch[]) => {
-    let totalDraws = 0;
+  private calcGoalsFavor = async (teamId: number, matches: IMatch[]) => {
+    let goals = 0;
+
+    matches.forEach((match) => {
+      const { homeTeam, awayTeam, homeTeamGoals, awayTeamGoals, inProgress } = match;
+
+      if (inProgress === false) {
+        if (teamId === homeTeam) {
+          goals += homeTeamGoals;
+        } else if (teamId === awayTeam) {
+          goals += awayTeamGoals;
+        }
+      }
+    });
+
+    return goals;
+  };
+
+  private calcTotalDraws = async (teamId: number, matches: IMatch[]) => {
+    let draws = 0;
 
     matches.forEach((match) => {
       const { homeTeam, awayTeam, homeTeamGoals, awayTeamGoals, inProgress } = match;
       const isPresent = teamId === homeTeam || teamId === awayTeam;
 
       if (inProgress === false && isPresent && homeTeamGoals === awayTeamGoals) {
-        totalDraws += 1;
+        draws += 1;
       }
     });
 
-    return totalDraws;
+    return draws;
   };
 
   private calcTotalGames = async (teamId: number, matches: IMatch[]) => {
@@ -41,8 +59,8 @@ class LeaderboardServices {
     return games;
   };
 
-  private calculateTotalLosses = async (teamId: number, matches: IMatch[]) => {
-    let totalLosses = 0;
+  private calcTotalLosses = async (teamId: number, matches: IMatch[]) => {
+    let losses = 0;
 
     matches.forEach((match) => {
       const { homeTeam, awayTeam, homeTeamGoals, awayTeamGoals, inProgress } = match;
@@ -50,11 +68,11 @@ class LeaderboardServices {
       const awayTeamLose = teamId === awayTeam && homeTeamGoals > awayTeamGoals;
 
       if (inProgress === false && (homeTeamLose || awayTeamLose)) {
-        totalLosses += 1;
+        losses += 1;
       }
     });
 
-    return totalLosses;
+    return losses;
   };
 
   private calcTotalPoints = async (teamId: number, matches: IMatch[]) => {
@@ -77,8 +95,8 @@ class LeaderboardServices {
     return points;
   };
 
-  private calculateTotalWins = async (teamId: number, matches: IMatch[]) => {
-    let totalWins = 0;
+  private calcTotalWins = async (teamId: number, matches: IMatch[]) => {
+    let wins = 0;
 
     matches.forEach((match) => {
       const { homeTeam, awayTeam, homeTeamGoals, awayTeamGoals, inProgress } = match;
@@ -86,11 +104,11 @@ class LeaderboardServices {
       const awayTeamWin = teamId === awayTeam && homeTeamGoals < awayTeamGoals;
 
       if (inProgress === false && (homeTeamWin || awayTeamWin)) {
-        totalWins += 1;
+        wins += 1;
       }
     });
 
-    return totalWins;
+    return wins;
   };
 
   public getAll = async () => {
@@ -104,10 +122,10 @@ class LeaderboardServices {
         name: teamName,
         totalPoints: this.calcTotalPoints(id, matches),
         totalGames: this.calcTotalGames(id, matches),
-        totalVictories: this.calculateTotalWins(id, matches),
-        totalDraws: this.calculateTotalDraws(id, matches),
-        totalLosses: this.calculateTotalLosses(id, matches),
-        goalsFavor: 0,
+        totalVictories: this.calcTotalWins(id, matches),
+        totalDraws: this.calcTotalDraws(id, matches),
+        totalLosses: this.calcTotalLosses(id, matches),
+        goalsFavor: this.calcGoalsFavor(id, matches),
         goalsOwn: 0,
         goalsBalance: 0,
         efficiency: 0,
