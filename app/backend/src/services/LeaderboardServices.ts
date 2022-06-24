@@ -11,14 +11,14 @@ class LeaderboardServices {
     this.teamsServices = new TeamsServices();
   }
 
-  private calcGoalsBalance = async (teamId: number, matches: IMatch[]) => {
-    const goalsFavor = await this.calcGoalsFavor(teamId, matches);
-    const calcGoalsOwn = await this.calcGoalsOwn(teamId, matches);
+  private calcGoalsBalance = (teamId: number, matches: IMatch[]) => {
+    const goalsFavor = this.calcGoalsFavor(teamId, matches);
+    const calcGoalsOwn = this.calcGoalsOwn(teamId, matches);
 
     return goalsFavor - calcGoalsOwn;
   };
 
-  private calcGoalsFavor = async (teamId: number, matches: IMatch[]) => {
+  private calcGoalsFavor = (teamId: number, matches: IMatch[]) => {
     let goals = 0;
 
     matches.forEach((match) => {
@@ -36,7 +36,7 @@ class LeaderboardServices {
     return goals;
   };
 
-  private calcGoalsOwn = async (teamId: number, matches: IMatch[]) => {
+  private calcGoalsOwn = (teamId: number, matches: IMatch[]) => {
     let goals = 0;
 
     matches.forEach((match) => {
@@ -54,14 +54,14 @@ class LeaderboardServices {
     return goals;
   };
 
-  public calcTeamUsage = async (teamId: number, matches: IMatch[]) => {
-    const totalPoints = await this.calcTotalPoints(teamId, matches);
-    const totalGames = await this.calcTotalGames(teamId, matches);
+  public calcTeamUsage = (teamId: number, matches: IMatch[]) => {
+    const totalPoints = this.calcTotalPoints(teamId, matches);
+    const totalGames = this.calcTotalGames(teamId, matches);
     const teamUsage = ((totalPoints / (totalGames * 3)) * 100);
     return (teamUsage).toFixed(2);
   };
 
-  private calcTotalDraws = async (teamId: number, matches: IMatch[]) => {
+  private calcTotalDraws = (teamId: number, matches: IMatch[]) => {
     let draws = 0;
 
     matches.forEach((match) => {
@@ -76,7 +76,7 @@ class LeaderboardServices {
     return draws;
   };
 
-  private calcTotalGames = async (teamId: number, matches: IMatch[]) => {
+  private calcTotalGames = (teamId: number, matches: IMatch[]) => {
     let games = 0;
 
     matches.forEach((match) => {
@@ -91,7 +91,7 @@ class LeaderboardServices {
     return games;
   };
 
-  private calcTotalLosses = async (teamId: number, matches: IMatch[]) => {
+  private calcTotalLosses = (teamId: number, matches: IMatch[]) => {
     let losses = 0;
 
     matches.forEach((match) => {
@@ -107,7 +107,7 @@ class LeaderboardServices {
     return losses;
   };
 
-  private calcTotalPoints = async (teamId: number, matches: IMatch[]) => {
+  private calcTotalPoints = (teamId: number, matches: IMatch[]) => {
     let points = 0;
 
     matches.forEach((match) => {
@@ -127,7 +127,7 @@ class LeaderboardServices {
     return points;
   };
 
-  private calcTotalWins = async (teamId: number, matches: IMatch[]) => {
+  private calcTotalWins = (teamId: number, matches: IMatch[]) => {
     let wins = 0;
 
     matches.forEach((match) => {
@@ -164,26 +164,15 @@ class LeaderboardServices {
   };
 
   public getAllAndReverseSort = async () => {
-    const tests = await this.getAll();
+    const leaderboard = await this.getAll();
 
-    tests.sort((team1, team2) => {
-      if (team1.totalPoints < team2.totalPoints) return -1;
-      if (team1.totalPoints > team2.totalPoints) return 1;
-
-      if (team1.totalVictories > team2.totalVictories) return -1;
-      if (team1.totalVictories < team2.totalVictories) return 1;
-
-      if (team1.goalsBalance > team2.goalsBalance) return -1;
-      if (team1.goalsBalance < team2.goalsBalance) return 1;
-
-      if (team1.goalsFavor > team2.goalsFavor) return -1;
-      if (team1.goalsFavor < team2.goalsFavor) return 1;
-
-      if (team1.goalsOwn > team2.goalsOwn) return -1;
-      if (team1.goalsOwn < team2.goalsOwn) return 1;
-
-      return 0;
-    }).reverse();
+    return leaderboard.sort((team1, team2) => (
+      team2.totalPoints - team1.totalPoints
+      || team2.totalVictories - team1.totalVictories
+      || team2.goalsBalance - team1.goalsBalance
+      || team2.goalsFavor - team1.goalsFavor
+      || team1.goalsOwn - team2.goalsOwn
+    ));
   };
 }
 
