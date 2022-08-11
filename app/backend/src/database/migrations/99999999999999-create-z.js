@@ -7,6 +7,7 @@ module.exports = {
       }
     });
   },
+
   down: async (queryInterface) => {
     await queryInterface.dropTable('trybe_eval');
   },
