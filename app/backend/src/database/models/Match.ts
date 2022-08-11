@@ -1,5 +1,4 @@
 import { Model, DataTypes } from 'sequelize';
-// eslint-disable-next-line import/no-cycle
 import Team from './Team';
 import db from '.';
 
