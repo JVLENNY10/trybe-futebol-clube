@@ -1,7 +1,7 @@
 import fs = require('fs');
 import { JwtPayload, Secret, sign, verify } from 'jsonwebtoken';
 
-class JwtServices {
+class JwtHelpers {
   private jwtSecret: string;
   private config: object;
 
@@ -14,4 +14,4 @@ class JwtServices {
   public decoder = (token: string): string | JwtPayload => verify(token, this.jwtSecret);
 }
 
-export default JwtServices;
+export default JwtHelpers;
