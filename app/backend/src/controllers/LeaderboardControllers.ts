@@ -8,8 +8,10 @@ class LeaderboardControllers {
     this.services = new LeaderboardServices();
   }
 
-  public getAll = async (_req: Request, res: Response): Promise<Response> => {
-    const leaderboard = await this.services.getAllAndReverseSort();
+  public getAll = async (req: Request, res: Response): Promise<Response> => {
+    const { path } = req;
+    const leaderboard = await this.services.getAllAndReverseSort(path);
+
     return res.status(200).json(leaderboard);
   };
 }
