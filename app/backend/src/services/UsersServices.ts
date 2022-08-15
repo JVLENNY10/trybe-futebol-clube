@@ -1,13 +1,13 @@
 import Bcrypt = require('bcryptjs');
-import JwtServices from './JwtServices';
 import User from '../database/models/User';
+import JwtHelpers from '../helpers/JwtHelpers';
 import { IUsersFunctions, IUser } from '../interfaces/UsersInterfaces';
 
 class UsersServices implements IUsersFunctions {
-  private jwtServices: JwtServices;
+  private jwtHelpers: JwtHelpers;
 
   constructor() {
-    this.jwtServices = new JwtServices();
+    this.jwtHelpers = new JwtHelpers();
   }
 
   public login = async (email: string, password: string): Promise<IUser | null> => {
@@ -18,7 +18,7 @@ class UsersServices implements IUsersFunctions {
 
       if (passwordExists) {
         const { id, username, role } = user;
-        const token = this.jwtServices.encoder({ id, email, role });
+        const token = this.jwtHelpers.encoder({ id, email, role });
 
         const result = {
           user: { id, username, role, email },
