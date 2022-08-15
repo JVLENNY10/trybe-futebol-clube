@@ -1,15 +1,15 @@
 import { Request, Response } from 'express';
-import JwtServices from '../services/JwtServices';
+import JwtHelpers from '../helpers/JwtHelpers';
 import UsersServices from '../services/UsersServices';
 import { IUserToken } from '../interfaces/UsersInterfaces';
 
 class UsersControllers {
   private usersServices: UsersServices;
-  private jwtServices: JwtServices;
+  private jwtHelpers: JwtHelpers;
 
   constructor() {
     this.usersServices = new UsersServices();
-    this.jwtServices = new JwtServices();
+    this.jwtHelpers = new JwtHelpers();
   }
 
   public login = async (req: Request, res: Response): Promise<Response> => {
@@ -20,7 +20,7 @@ class UsersControllers {
 
   public loginValidate = async (req: Request, res: Response): Promise<Response> => {
     const token = req.headers.authorization;
-    const { data: { role } } = this.jwtServices.decoder(token as string) as IUserToken;
+    const { data: { role } } = this.jwtHelpers.decoder(token as string) as IUserToken;
     return res.status(200).json(role);
   };
 }
