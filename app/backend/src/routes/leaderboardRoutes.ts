@@ -6,6 +6,8 @@ const leaderboardControllers = new LeaderboardControllers();
 
 const { getAll } = leaderboardControllers;
 
+routes.get('/leaderboard', getAll);
+routes.get('/leaderboard/away', getAll);
 routes.get('/leaderboard/home', getAll);
 
 export default routes;
