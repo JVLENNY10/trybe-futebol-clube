@@ -1351,8 +1351,44 @@ const allMatchesResponse = [
   }
 ]
 
+const newMatchRequest = {
+  homeTeam: 16,
+  awayTeam: 8,
+  homeTeamGoals: 2,
+  awayTeamGoals: 2,
+}
+
+const newMatchResponse = {
+  id: 1,
+  homeTeam: 16,
+  homeTeamGoals: 2,
+  awayTeam: 8,
+  awayTeamGoals: 2,
+  inProgress: true,
+}
+
+const updateMatchEqualTeamsRequest = {
+  homeTeamGoals: 7,
+  awayTeamGoals: 7,
+}
+
+const updateMatchNonexistentTeamRequest = {
+  homeTeamGoals: 7,
+  awayTeamGoals: 7,
+}
+
+const updateMatchRequest = {
+  homeTeamGoals: 3,
+  awayTeamGoals: 1,
+}
+
 export {
   allMatchesInprogressFalseResponse,
   allMatchesInProgressTrueResponse,
-  allMatchesResponse
+  allMatchesResponse,
+  newMatchRequest,
+  newMatchResponse,
+  updateMatchEqualTeamsRequest,
+  updateMatchNonexistentTeamRequest,
+  updateMatchRequest,
 };
