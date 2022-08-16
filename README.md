@@ -1,8 +1,5 @@
 # Boas vindas ao repositório do Trybe Futebol Clube!
 
-# Créditos
-O Front-End e as configurações de ambiente foram feitos pela [Trybe](https://www.betrybe.com/). 🚀
-
 # Sobre o projeto
 
 O `TFC` é um site informativo sobre partidas e classificações de futebol! ⚽️
@@ -30,7 +27,11 @@ Siga as instruções passadas para conseguir utilizar o projeto corretamente. �
 - Ter um token `(A pessoa deve estar logada para fazer alterações)`.
 </details>
 
-# Endpoints desenvolvidos no Back-End:
+# Contribuidores
+
+O Front-End e as configurações de ambiente foram feitos pela [Trybe](https://www.betrybe.com/). 🚀
+
+<!-- # Endpoints desenvolvidos no Back-End:
 
 No Back-End deste projeto foram desenvolvidos 11 endpoints.
 
@@ -88,7 +89,7 @@ Para matches foram desenvolvididos 4 endpoints.
 - Se o body estiver com E-Mail ou senha inválidos irá retornar um status `401 - Unauthorized` com uma mensagem;
 - Se o body estiver sem o campo E-Mail ou senha irá retornar um status `400 - Bad Request` com uma mensagem;
 
-</details>
+</details> -->
 
 <!-- Olá, Tryber!
 
