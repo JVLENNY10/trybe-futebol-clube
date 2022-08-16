@@ -6,7 +6,6 @@ import chaiHttp = require('chai-http');
 import { app } from '../app';
 import { Response } from 'superagent';
 import User from '../database/models/User';
-
 import {
   loginBody,
   loginResponse,
@@ -15,7 +14,7 @@ import {
   invalidPassword,
   nullEmail,
   nullPassword
-} from './mock/models/usersMocks';
+} from './mock/models/loginMocks';
 
 chai.use(chaiHttp);
 
