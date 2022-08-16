@@ -8,7 +8,7 @@ class TeamsServices implements ITeamsFunctions {
   };
 
   public getById = async (id: string): Promise<ITeam> => {
-    const teams = await Team.findOne({ where: { id } });
+    const teams = await Team.findByPk(id);
     return teams as ITeam;
   };
 }
