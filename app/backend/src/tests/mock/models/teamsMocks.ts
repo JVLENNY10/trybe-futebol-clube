@@ -17,6 +17,6 @@ const allTeamsResponse = [
   { id: 16, teamName: 'São Paulo' },
 ]
 
-export {
-  allTeamsResponse,
-};
+const oneTeamResponse = { id: 1, teamName: 'Avaí/Kindermann' }
+
+export { allTeamsResponse, oneTeamResponse };
