@@ -14,7 +14,7 @@ import {
   invalidPassword,
   nullEmail,
   nullPassword
-} from './mock/models/loginMocks';
+} from './mocks/loginMocks';
 
 chai.use(chaiHttp);
 
