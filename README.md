@@ -1,12 +1,23 @@
 # Boas vindas ao repositório do Trybe Futebol Clube!
 
-# Sobre o projeto
+## Sobre o projeto
 
 O `TFC` é um site informativo sobre partidas e classificações de futebol! ⚽️
 
 Neste projeto utilizei o método `TDD`, desenvolvi uma API e também integrei, através do `docker-compose`, as aplicações para que elas funcionem consumindo um banco de dados.
 
-# Como utilizar?
+## Como rodar?
+
+<details>
+  <summary><strong>Siga as seguintes etapas:</summary><br/>
+
+1. Clone o repositório na sua máquina: `git clone git@github.com:JVLENNY10/trybe-futebol-clube.git`;
+2. Instale as dependências: `npm install`;
+3. Rode: `npm start`.
+
+</details>
+
+## Como utilizar?
 
 Siga as instruções passadas para conseguir utilizar o projeto corretamente. 😉
 
@@ -27,7 +38,7 @@ Siga as instruções passadas para conseguir utilizar o projeto corretamente. �
 - Ter um token `(A pessoa deve estar logada para fazer alterações)`.
 </details>
 
-# Contribuidores
+## Contribuidores
 
 O Front-End e as configurações de ambiente foram feitos pela [Trybe](https://www.betrybe.com/). 🚀
 
